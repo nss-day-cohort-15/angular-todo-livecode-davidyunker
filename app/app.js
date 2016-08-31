@@ -1,64 +1,29 @@
 "use strict";
 // this is the parent module
-var app = angular.module("ToDoApp", []);
+var app = angular.module("ToDoApp", ["ngRoute"]);
 
-// creating controller for the navbar//
+// angular-route separate angular library. has to be added as a dependency and listed as a third party library
 
-app.controller("NavCtrl", function ($scope) {
-    $scope.navItems = [
-    {name: "Logout"},
-    {name: "All Items"},
-    {name: "New Items"}
-    ];
+// name of the module is ngRoute. Must inject it and now it's available to us.
+
+// When we talk about routing, we're talking about the URL of the application
+
+app.config(function($routeProvider) {
+    $routeProvider.
+        when("/items/list", {
+            templateUrl: "partials/item-list.html",
+            controller: 'TodoCtrl',
+        }).
+        when("/items/new", {
+            templateUrl: "partials/item-form.html",
+            controller: "TodoCtrl"
+        }).
+        otherwise("/items/list");
+        // way to make sure they don't go anywhere else.
+
 });
 
-app.controller("TodoCtrl", function ($scope) {
+// when the route is this, use this.
+// templateUrl == U is capitalized. everything else isn't
 
-    $scope.items = [
-      {
-        id: 0,
-        task: "mow the lawn",
-        isCompleted: false,
-        dueDate: "12/5/17",
-        assignedTo: "Greg",
-        location: "Joe's house",
-        urgency: "low",
-        dependencies: "sunshine, clippers, hat, water, headphones"
-      },
-      {
-        id: 1,
-        task: "grade quizzes",
-        isCompleted: false,
-        dueDate: "12/5/15",
-        assignedTo: "Christina",
-        location: "NSS",
-        urgency: "high",
-        dependencies: "wifi, tissues, vodka"
-      },
-      {
-        id: 2,
-        task: "take a nap",
-        isCompleted: false,
-        dueDate: "5/21/16",
-        assignedTo: "Joe",
-        location: "Porch of lakefront cabin",
-        urgency: "medium",
-        dependencies: "hammock, silence"
-      }
-    ];
-    // new task object
-    $scope.newTask = {};
-    $scope.showListView = true;
-    $scope.newItem = function () {
-        $scope.showListView = false;
-    };
-    $scope.allItem = function () {
-        $scope.showListView = true;
-    };
-    $scope.addNewItem = function () {
-        $scope.newTask.isCompleted = false;
-        $scope.newTask.id = $scope.items.length;
-        $scope.items.push($scope.newTask);
-        $scope.newTask = {};
-    };
-});
+
