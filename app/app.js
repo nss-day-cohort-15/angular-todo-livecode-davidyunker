@@ -1,6 +1,9 @@
 "use strict";
 // this is the parent module
-var app = angular.module("ToDoApp", ["ngRoute"]);
+var app = angular.module("ToDoApp", ["ngRoute"])
+.constant("FirebaseURL", "https://todo-list-543c8.firebaseio.com/");
+// this allows us to define an inmutable variable we can use anywhere
+
 
 // angular-route separate angular library. has to be added as a dependency and listed as a third party library
 
@@ -16,8 +19,14 @@ app.config(function($routeProvider) {
         }).
         when("/items/new", {
             templateUrl: "partials/item-form.html",
-            controller: "TodoCtrl"
+            controller: "ItemNewCtrl"
         }).
+        when("/items/view/:itemId", {
+            templateUrl: "partials/item-details.html",
+            controller: "ItemViewCtrl"
+    // passing in a variable to stand in as a placeholder for any ID.
+        }).
+
         otherwise("/items/list");
         // way to make sure they don't go anywhere else.
 

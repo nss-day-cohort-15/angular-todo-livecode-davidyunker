@@ -1,4 +1,6 @@
 "use strict";
+// no longer using this anymore has been removed from the index
+
 
 
 app.controller("TodoCtrl", function ($scope, $location) {
