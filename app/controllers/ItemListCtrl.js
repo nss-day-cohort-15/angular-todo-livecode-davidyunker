@@ -1,6 +1,6 @@
 "use strict";
 
-app.controller("ItemListCtrl", function ($scope, ItemStorage, SearchTermData) {
+app.controller("ItemListCtrl", function ($scope, ItemStorage, SearchTermData, $location) {
 // now we inject the item factory
   $scope.searchText = SearchTermData;
   ItemStorage.getItemList()
@@ -22,4 +22,11 @@ app.controller("ItemListCtrl", function ($scope, ItemStorage, SearchTermData) {
         //$scope is now the latest version of our list
       });
     };
+
+      $scope.itemEditView = (itemId) => {
+    $location.url(`/items/edit/${itemId}`);
+  };
+
+      // function will return a promise so we can use .then() here
+      //the factory is going to do the dirty work
 });

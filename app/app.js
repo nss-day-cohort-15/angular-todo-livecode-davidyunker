@@ -26,6 +26,10 @@ app.config(function($routeProvider) {
             controller: "ItemViewCtrl"
     // passing in a variable to stand in as a placeholder for any ID.
         }).
+          when('/items/edit/:itemId', {
+            templateUrl: 'partials/item-edit.html',
+            controller: "ItemEditCtrl"
+  }).
 
         otherwise("/items/list");
         // way to make sure they don't go anywhere else.
