@@ -3,7 +3,8 @@
 app.controller("ItemListCtrl", function ($scope, ItemStorage, SearchTermData, $location) {
 // now we inject the item factory
   $scope.searchText = SearchTermData;
-  ItemStorage.getItemList()
+  let user = $scope.$parent.getUser()
+  ItemStorage.getItemList(user)
   // because it returns a promise we can do a .then()
     .then((itemCollectionArr) => {
       console.log("item collection", itemCollectionArr);
@@ -14,7 +15,7 @@ app.controller("ItemListCtrl", function ($scope, ItemStorage, SearchTermData, $l
       // function will return a promise so we can use .then() here
       //the factory is going to do the dirty work
       .then((response) => {
-        ItemStorage.getItemList()
+        ItemStorage.getItemList(user)
         .then((itemCollectionArr) => {
           $scope.items = itemCollectionArr;
         });

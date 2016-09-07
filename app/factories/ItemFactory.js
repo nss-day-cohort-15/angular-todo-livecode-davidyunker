@@ -1,12 +1,13 @@
 "use strict";
+// can't leverage the parent thing in the factory
 
 app.factory("ItemStorage", ($q, $http, FirebaseURL) => {
-  let getItemList = () => {
+  let getItemList = (user) => {
     let items = [];
     return $q((resolve, reject) => {
       // instead of retunr new Promise it's return $q
       // we're returning a promise wrapped in an ajax call
-      $http.get(`${FirebaseURL}/items.json`)
+      $http.get(`${FirebaseURL}/items.json?orderBy="uid"&equalTo="${user}"`)
       .success((itemObject) => {
         // when we get our itemObject object back, we're going to resolve with items, which is an array
 
@@ -40,6 +41,15 @@ app.factory("ItemStorage", ($q, $http, FirebaseURL) => {
     });
   };
 
+    // //
+  // let getSingleItem = (itemId) => {
+  //   return $q((resolve, reject) => {
+  //     $http.get(`{$FirebaseURL}/items/${itemId}.json`)
+   //     .success((itemObject) => {
+        //   resolve(itemObject);
+        // })
+
+
   let postNewItem = (newItem) => {
     return $q((resolve, reject) => {
       // $http.post takes two arguments the url and the stringify
@@ -54,6 +64,12 @@ app.factory("ItemStorage", ($q, $http, FirebaseURL) => {
 // this will post to Firebase
     });
   };
+
+
+
+
+  //
+  //
 
   let deleteItem = (itemId) => {
     return $q((resolve, reject) => {
@@ -71,6 +87,16 @@ app.factory("ItemStorage", ($q, $http, FirebaseURL) => {
       .error((error) => console.error(error.error));
     });
   };
+
+  //    let updateItem = (itemId, editedItem) => {
+  //   return $q((resolve, reject) =>{
+  //     $http.patch(`${FirebaseURL}/items/${itemId}.json`,
+  //       JSON.stringify(editedItem))
+  //     .success((ObjFromFirebase) => resolve(ObjFromFirebase))
+  //     .error((error) => console.error(error.error));
+  //   });
+  // };
+
   return {getItemList, postNewItem, deleteItem, editItem, getItem};
 });
 

@@ -26,8 +26,13 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <!-- TODO: Use Angular to loop through nav items -->
-        <ul class="nav navbar-nav navbar-right" ng-repeat="item in navItems">
-          <li><a href="{{item.url}}">{{item.name}}</a></li>
+        <ul class="nav navbar-nav navbar-right">
+          <li ng-show="!$parent.isLoggedIn"><a ng-href="#/login">Login</a></li>
+          <li ng-show="$parent.isLoggedIn"><a ng-href="#/items/new">New item</a></li>
+          <li ng-show="$parent.isLoggedIn"><a ng-href="#/items/list">All items</a></li>
+          <li ng-show="$parent.isLoggedIn"><button ng-click="logout()">Logout</button></li>
+
+          <!-- juicing this up a bit with ng-show and item.showState. Must add to Navbar controller -->
           <!-- loop through nav data -->
         </ul>
       </div><!-- /.navbar-collapse -->
